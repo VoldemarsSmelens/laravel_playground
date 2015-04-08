@@ -7,7 +7,6 @@
 
 <body>
 	<div>
-		
 		@yield('content')
 	</div>
 	@yield('footer')
