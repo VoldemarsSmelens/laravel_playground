@@ -1,10 +1,10 @@
 <?php namespace App\Http\Controllers;
 
 use App\Article;
-use App\Http\Requests\CreateArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-
+use Illuminate\Http\Request;
 
 
 class ArticlesController extends Controller {
@@ -30,11 +30,22 @@ class ArticlesController extends Controller {
 		return view('articles.create');
 	}
 
-	public function store(CreateArticleRequest $request){
+	public function store(ArticleRequest $request){
 
 		
 		Article::create($request->all());
 		
+		return redirect('articles');
+	}	
+
+	public function edit($id){
+		$article = Article::findOrFail($id);
+		return view('articles.edit', compact('article'));
+	}
+	public function update($id, ArticleRequest $response){
+		$article = Article::findOrFail($id);
+
+		$article->update($response->all());
 		return redirect('articles');
 	}
 }
