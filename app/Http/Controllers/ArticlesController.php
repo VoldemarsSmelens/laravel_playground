@@ -11,8 +11,8 @@ class ArticlesController extends Controller {
 
 	public function index(){
 
-		$articles = Article::latest('published_at')->get();//json
-
+		//$articles = Article::latest('published_at')->where('published_at', '<=', Carbon::now())->get();//json
+		$articles = Article::latest('published_at')->published()->get();//json
 		return view('articles.index', compact('articles'));
 	}
 
@@ -30,9 +30,9 @@ class ArticlesController extends Controller {
 		return view('articles.create');
 	}
 	public function store(){
-		$input = Request::all();
-		$input['published_at'] = Carbon::now(); 
-		Article::create($input);
+
+		
+		Article::create(Request::all());
 		
 		return redirect('articles');
 	}
